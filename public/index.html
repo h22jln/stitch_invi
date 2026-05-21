@@ -1,37 +1,108 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stitch Invi</title>
-  <link rel="stylesheet" href="/css/main.css">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Retro Lock Screen</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/lock-screen.css"/>
   <script src="https://unpkg.com/htmx.org@2.0.4" defer></script>
+  <script src="/js/tailwind-lock-config.js"></script>
 </head>
-<body>
-  <header class="site-header">
-    <h1>Stitch Invi</h1>
-  </header>
+<body class="lock-screen min-h-screen flex items-center justify-center p-4">
+  <!-- Smartphone frame -->
+  <div class="relative w-full max-w-[390px] h-[844px] bg-primary-container neo-brutal-card rounded-[40px] overflow-hidden flex flex-col">
+    <header class="absolute top-0 w-full flex justify-between items-center px-6 h-12 z-50 text-secondary font-label-md text-label-md">
+      <div class="flex items-center gap-1">
+        <span id="lock-status-time">9:41</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined !text-[18px]">signal_cellular_alt</span>
+        <span class="material-symbols-outlined !text-[18px]">wifi</span>
+        <span>100%</span>
+      </div>
+    </header>
 
-  <main id="main-content">
-    <section>
-      <h2>Example list</h2>
-      <p class="hint">HTMX로 <code>/api/example</code> fragment를 불러옵니다.</p>
-
-      <div
-        id="example-panel"
-        hx-get="/api/example"
-        hx-trigger="load"
-        hx-target="#example-panel"
-        hx-swap="innerHTML"
-        hx-indicator="#loading"
-      >
-        <p id="loading" class="htmx-indicator">Loading…</p>
+    <main class="flex-1 min-h-0 w-full flex flex-col items-center pt-24 px-6 relative overflow-y-auto">
+      <div id="lock-date" class="mb-2 font-label-md text-label-md text-secondary uppercase tracking-widest">
+        SATURDAY, MAY 18
       </div>
 
-      <button type="button" hx-get="/api/example" hx-target="#example-panel" hx-swap="innerHTML">
-        Refresh
+      <h1 id="lock-clock" class="font-headline-xl text-[120px] leading-none text-secondary tracking-tighter mb-8 drop-shadow-[4px_4px_0px_#C5D89D]">
+        00:00
+      </h1>
+
+      <!-- HTMX: /api/lock fragment (실패 시 아래 정적 fallback 유지) -->
+      <div
+        id="lock-notifications"
+        class="w-full mt-8"
+        hx-get="/api/lock"
+        hx-trigger="load"
+        hx-target="this"
+        hx-swap="innerHTML"
+        hx-indicator="#notifications-loading"
+      >
+        <p id="notifications-loading" class="htmx-indicator font-label-md text-label-md text-secondary text-center py-2">
+          Loading…
+        </p>
+        <div class="lock-notifications">
+          <article class="lock-notification-card">
+            <div class="lock-notification-icon">
+              <span class="material-symbols-outlined">messages</span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="lock-notification-meta">
+                <span>Messages</span>
+                <span class="lock-notification-time">2m ago</span>
+              </div>
+              <p class="lock-notification-body">준비 다 됐어? 공원에서 기다릴게!</p>
+            </div>
+          </article>
+          <div class="lock-notification-empty">No other notifications</div>
+        </div>
+      </div>
+
+      <div class="absolute top-[40%] -left-4 w-12 h-12 bg-secondary-container border-2 border-secondary rounded-full flex items-center justify-center rotate-12 pointer-events-none">
+        <span class="material-symbols-outlined text-secondary">star</span>
+      </div>
+      <div class="absolute top-[60%] -right-2 w-10 h-10 bg-surface-variant border-2 border-secondary rotate-[-15deg] flex items-center justify-center pointer-events-none">
+        <span class="material-symbols-outlined text-secondary">favorite</span>
+      </div>
+    </main>
+
+    <div class="w-full px-8 pb-12 flex flex-col items-center gap-8">
+      <div class="w-full flex justify-between items-center">
+        <button type="button" class="neo-brutal-btn w-14 h-14 bg-surface rounded-full border-2 border-secondary shadow-[4px_4px_0px_0px_#546434] flex items-center justify-center transition-all" aria-label="Flashlight">
+          <span class="material-symbols-outlined text-secondary">flashlight_on</span>
+        </button>
+        <button type="button" class="neo-brutal-btn w-14 h-14 bg-surface rounded-full border-2 border-secondary shadow-[4px_4px_0px_0px_#546434] flex items-center justify-center transition-all" aria-label="Camera">
+          <span class="material-symbols-outlined text-secondary">photo_camera</span>
+        </button>
+      </div>
+
+      <button
+        type="button"
+        class="flex flex-col items-center gap-3 bg-transparent border-0 cursor-pointer"
+        hx-get="/api/lock"
+        hx-target="#lock-notifications"
+        hx-swap="innerHTML"
+        aria-label="Refresh notifications"
+      >
+        <span class="font-label-md text-label-md text-secondary animate-swipe">SWIPE UP TO UNLOCK</span>
+        <span class="w-32 h-1.5 bg-secondary rounded-full opacity-80 block"></span>
       </button>
-    </section>
-  </main>
+    </div>
+  </div>
+
+  <div class="fixed top-10 left-10 opacity-20 pointer-events-none select-none hidden lg:block">
+    <h2 class="font-headline-xl text-secondary text-9xl">Y2K</h2>
+  </div>
+  <div class="fixed bottom-10 right-10 opacity-20 pointer-events-none select-none hidden lg:block">
+    <span class="material-symbols-outlined text-secondary !text-[120px]">grid_view</span>
+  </div>
+
+  <script src="/js/lock-screen.js" defer></script>
 </body>
 </html>

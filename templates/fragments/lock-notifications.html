@@ -1,0 +1,24 @@
+<div class="lock-notifications">
+  {% for n in notifications %}
+  <article class="lock-notification-card">
+    <div class="lock-notification-icon">
+      <span class="material-symbols-outlined">{{ n.icon }}</span>
+    </div>
+    <div class="flex-1 min-w-0">
+      <div class="lock-notification-meta">
+        <span>{{ n.app }}</span>
+        <span class="lock-notification-time">{{ n.time }}</span>
+      </div>
+      <p class="lock-notification-body">{{ n.body }}</p>
+    </div>
+  </article>
+  {% endfor %}
+
+  <div class="lock-notification-empty">
+    {% if notifications|length == 0 %}
+    No notifications
+    {% else %}
+    No other notifications
+    {% endif %}
+  </div>
+</div>
