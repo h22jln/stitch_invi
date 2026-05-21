@@ -12,9 +12,9 @@
   <script src="/js/tailwind-lock-config.js"></script>
 </head>
 <body class="lock-screen min-h-screen flex items-center justify-center p-4">
-  <!-- Smartphone frame -->
-  <div class="relative w-full max-w-[390px] h-[844px] bg-primary-container neo-brutal-card rounded-[40px] overflow-hidden flex flex-col">
-    <header class="absolute top-0 w-full flex justify-between items-center px-6 h-12 z-50 text-secondary font-label-md text-label-md">
+  <div id="phone-frame" class="phone-frame">
+    <!-- 고정 상태바 (베젤) -->
+    <div class="phone-status-bar phone-status-bar--lock">
       <div class="flex items-center gap-1">
         <span id="lock-status-time">9:41</span>
       </div>
@@ -23,76 +23,148 @@
         <span class="material-symbols-outlined !text-[18px]">wifi</span>
         <span>100%</span>
       </div>
-    </header>
-
-    <main class="flex-1 min-h-0 w-full flex flex-col items-center pt-24 px-6 relative overflow-y-auto">
-      <div id="lock-date" class="mb-2 font-label-md text-label-md text-secondary uppercase tracking-widest">
-        SATURDAY, MAY 18
+    </div>
+    <div class="phone-status-bar phone-status-bar--home">
+      <div class="flex items-center gap-2">
+        <span id="home-status-time" class="font-bold">9:41</span>
+        <span class="material-symbols-outlined text-[18px]">signal_cellular_alt</span>
+        <span class="material-symbols-outlined text-[18px]">wifi</span>
       </div>
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]">battery_very_low</span>
+        <span class="font-bold">100%</span>
+      </div>
+    </div>
 
-      <h1 id="lock-clock" class="font-headline-xl text-[120px] leading-none text-secondary tracking-tighter mb-8 drop-shadow-[4px_4px_0px_#C5D89D]">
-        00:00
-      </h1>
-
-      <!-- HTMX: /api/lock fragment (실패 시 아래 정적 fallback 유지) -->
-      <div
-        id="lock-notifications"
-        class="w-full mt-8"
-        hx-get="/api/lock"
-        hx-trigger="load"
-        hx-target="this"
-        hx-swap="innerHTML"
-        hx-indicator="#notifications-loading"
-      >
-        <p id="notifications-loading" class="htmx-indicator font-label-md text-label-md text-secondary text-center py-2">
-          Loading…
-        </p>
-        <div class="lock-notifications">
-          <article class="lock-notification-card">
-            <div class="lock-notification-icon">
-              <span class="material-symbols-outlined">messages</span>
-            </div>
-            <div class="flex-1 min-w-0">
-              <div class="lock-notification-meta">
-                <span>Messages</span>
-                <span class="lock-notification-time">2m ago</span>
+    <div id="phone-screen" class="phone-screen">
+      <!-- 홈: 아래 고정 -->
+      <section id="screen-home" class="screen-underlay">
+        <div class="home-os h-full flex flex-col overflow-hidden select-none bg-[#F6F0D7] font-body-md relative">
+          <main class="flex-1 min-h-0 mt-12 px-6 flex flex-col overflow-y-auto pb-28">
+            <div class="grid grid-cols-4 gap-x-2 gap-y-6 w-full max-w-md mx-auto mb-12 mt-4 px-2">
+              <div class="home-app-tile flex flex-col items-center gap-3 active-press transition-all cursor-pointer">
+                <div class="home-app-icon bg-[#9CAB84] border-2 border-[#89986D] rounded-2xl flex items-center justify-center shadow-[6px_6px_0px_0px_#89986D] w-[72px] h-[72px]">
+                  <span class="material-symbols-outlined text-white text-3xl">image</span>
+                </div>
+                <span class="font-label-md text-[10px] text-[#89986D] uppercase font-bold tracking-tight text-center">Gallery</span>
               </div>
-              <p class="lock-notification-body">준비 다 됐어? 공원에서 기다릴게!</p>
+              <div class="home-app-tile flex flex-col items-center gap-3 active-press transition-all cursor-pointer">
+                <div class="home-app-icon bg-[#9CAB84] border-2 border-[#89986D] rounded-2xl flex items-center justify-center shadow-[6px_6px_0px_0px_#89986D] w-[72px] h-[72px]">
+                  <span class="material-symbols-outlined text-white text-3xl">map</span>
+                </div>
+                <span class="font-label-md text-[10px] text-[#89986D] uppercase font-bold tracking-tight text-center">Maps</span>
+              </div>
+              <div class="home-app-tile flex flex-col items-center gap-3 active-press transition-all cursor-pointer">
+                <div class="home-app-icon bg-[#9CAB84] border-2 border-[#89986D] rounded-2xl flex items-center justify-center shadow-[6px_6px_0px_0px_#89986D] w-[72px] h-[72px]">
+                  <span class="material-symbols-outlined text-white text-3xl">note_alt</span>
+                </div>
+                <span class="font-label-md text-[10px] text-[#89986D] uppercase font-bold tracking-tight text-center">Notes</span>
+              </div>
+              <div class="home-app-tile flex flex-col items-center gap-3 active-press transition-all cursor-pointer">
+                <div class="home-app-icon bg-[#9CAB84] border-2 border-[#89986D] rounded-2xl flex items-center justify-center shadow-[6px_6px_0px_0px_#89986D] w-[72px] h-[72px]">
+                  <span class="material-symbols-outlined text-white text-3xl">calendar_today</span>
+                </div>
+                <span class="font-label-md text-[10px] text-[#89986D] uppercase font-bold tracking-tight text-center">Calendar</span>
+              </div>
             </div>
-          </article>
-          <div class="lock-notification-empty">No other notifications</div>
+            <div class="w-full max-w-md mx-auto mb-12 mt-4">
+              <div class="bg-surface-container border-2 border-secondary p-6 shadow-[4px_4px_0px_0px_#546434] flex items-center justify-between">
+                <div>
+                  <h2 class="font-headline-md text-headline-md text-secondary mb-1">HELLO USER!</h2>
+                  <p class="font-body-md text-secondary/80">You have 4 unread messages.</p>
+                </div>
+                <div class="bg-secondary rounded-full p-2">
+                  <span class="material-symbols-outlined text-on-secondary text-4xl">face</span>
+                </div>
+              </div>
+            </div>
+          </main>
+          <nav class="home-dock absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex justify-around items-center p-4 w-[calc(100%-48px)] max-w-sm bg-surface-container border-2 border-secondary rounded-full shadow-[4px_4px_0px_0px_#546434]">
+            <button type="button" class="bg-[#89986D] text-[#F6F0D7] rounded-full p-3 shadow-none transition-all active:translate-x-1 active:translate-y-1 hover:bg-secondary-container" aria-label="Phone">
+              <span class="material-symbols-outlined home-icon-fill text-3xl">phone</span>
+            </button>
+            <button type="button" class="text-secondary p-3 transition-all active:translate-x-1 active:translate-y-1 hover:bg-secondary-container rounded-full" aria-label="Messages">
+              <span class="material-symbols-outlined text-3xl">messages</span>
+            </button>
+            <button type="button" class="text-secondary p-3 transition-all active:translate-x-1 active:translate-y-1 hover:bg-secondary-container rounded-full" aria-label="Browser">
+              <span class="material-symbols-outlined text-3xl">globe</span>
+            </button>
+            <button type="button" class="text-secondary p-3 transition-all active:translate-x-1 active:translate-y-1 hover:bg-secondary-container rounded-full" aria-label="Settings">
+              <span class="material-symbols-outlined text-3xl">settings</span>
+            </button>
+          </nav>
         </div>
-      </div>
+      </section>
 
-      <div class="absolute top-[40%] -left-4 w-12 h-12 bg-secondary-container border-2 border-secondary rounded-full flex items-center justify-center rotate-12 pointer-events-none">
-        <span class="material-symbols-outlined text-secondary">star</span>
-      </div>
-      <div class="absolute top-[60%] -right-2 w-10 h-10 bg-surface-variant border-2 border-secondary rotate-[-15deg] flex items-center justify-center pointer-events-none">
-        <span class="material-symbols-outlined text-secondary">favorite</span>
-      </div>
-    </main>
+      <!-- 잠금: 홈 위 덮개 — 스와이프 시 위로 밀려 사라짐 -->
+      <section id="screen-lock" class="screen-overlay">
+        <main class="flex-1 min-h-0 w-full flex flex-col items-center pt-24 px-6 relative overflow-hidden">
+          <div id="lock-date" class="mb-2 font-label-md text-label-md text-secondary uppercase tracking-widest">
+            SATURDAY, MAY 18
+          </div>
+          <h1 id="lock-clock" class="font-headline-xl text-[120px] leading-none text-secondary tracking-tighter mb-8 drop-shadow-[4px_4px_0px_#C5D89D]">
+            00:00
+          </h1>
 
-    <div class="w-full px-8 pb-12 flex flex-col items-center gap-8">
-      <div class="w-full flex justify-between items-center">
-        <button type="button" class="neo-brutal-btn w-14 h-14 bg-surface rounded-full border-2 border-secondary shadow-[4px_4px_0px_0px_#546434] flex items-center justify-center transition-all" aria-label="Flashlight">
-          <span class="material-symbols-outlined text-secondary">flashlight_on</span>
-        </button>
-        <button type="button" class="neo-brutal-btn w-14 h-14 bg-surface rounded-full border-2 border-secondary shadow-[4px_4px_0px_0px_#546434] flex items-center justify-center transition-all" aria-label="Camera">
-          <span class="material-symbols-outlined text-secondary">photo_camera</span>
-        </button>
-      </div>
+          <div
+            id="lock-notifications"
+            class="w-full mt-8"
+            hx-get="/api/lock"
+            hx-trigger="load"
+            hx-target="this"
+            hx-swap="innerHTML"
+            hx-indicator="#notifications-loading"
+          >
+            <p id="notifications-loading" class="htmx-indicator font-label-md text-label-md text-secondary text-center py-2">
+              Loading…
+            </p>
+            <div class="lock-notifications">
+              <article class="lock-notification-card">
+                <div class="lock-notification-icon">
+                  <span class="material-symbols-outlined">messages</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="lock-notification-meta">
+                    <span>Messages</span>
+                    <span class="lock-notification-time">2m ago</span>
+                  </div>
+                  <p class="lock-notification-body">준비 다 됐어? 공원에서 기다릴게!</p>
+                </div>
+              </article>
+              <div class="lock-notification-empty">No other notifications</div>
+            </div>
+          </div>
 
-      <button
-        type="button"
-        class="flex flex-col items-center gap-3 bg-transparent border-0 cursor-pointer"
-        hx-get="/api/lock"
-        hx-target="#lock-notifications"
-        hx-swap="innerHTML"
-        aria-label="Refresh notifications"
-      >
-        <span class="font-label-md text-label-md text-secondary animate-swipe">SWIPE UP TO UNLOCK</span>
-        <span class="w-32 h-1.5 bg-secondary rounded-full opacity-80 block"></span>
-      </button>
+          <div class="absolute top-[40%] -left-4 w-12 h-12 bg-secondary-container border-2 border-secondary rounded-full flex items-center justify-center rotate-12 pointer-events-none">
+            <span class="material-symbols-outlined text-secondary">star</span>
+          </div>
+          <div class="absolute top-[60%] -right-2 w-10 h-10 bg-surface-variant border-2 border-secondary rotate-[-15deg] flex items-center justify-center pointer-events-none">
+            <span class="material-symbols-outlined text-secondary">favorite</span>
+          </div>
+        </main>
+
+        <div class="w-full px-8 pb-12 flex flex-col items-center gap-8 shrink-0">
+          <div class="w-full flex justify-between items-center">
+            <button type="button" class="neo-brutal-btn w-14 h-14 bg-surface rounded-full border-2 border-secondary shadow-[4px_4px_0px_0px_#546434] flex items-center justify-center transition-all" aria-label="Flashlight">
+              <span class="material-symbols-outlined text-secondary">flashlight_on</span>
+            </button>
+            <button type="button" class="neo-brutal-btn w-14 h-14 bg-surface rounded-full border-2 border-secondary shadow-[4px_4px_0px_0px_#546434] flex items-center justify-center transition-all" aria-label="Camera">
+              <span class="material-symbols-outlined text-secondary">photo_camera</span>
+            </button>
+          </div>
+
+          <div
+            id="unlock-handle"
+            class="unlock-hint flex flex-col items-center gap-3 w-full"
+            role="button"
+            tabindex="0"
+            aria-label="Swipe up to unlock"
+          >
+            <span class="font-label-md text-label-md text-secondary animate-swipe pointer-events-none">SWIPE UP TO UNLOCK</span>
+            <span class="w-32 h-1.5 bg-secondary rounded-full opacity-80 block pointer-events-none"></span>
+          </div>
+        </div>
+      </section>
     </div>
   </div>
 
@@ -103,6 +175,7 @@
     <span class="material-symbols-outlined text-secondary !text-[120px]">grid_view</span>
   </div>
 
+  <script src="/js/home-screen.js" defer></script>
   <script src="/js/lock-screen.js" defer></script>
 </body>
 </html>

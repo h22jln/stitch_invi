@@ -57,6 +57,9 @@ tailwind.config = {
         xl: "0.5rem",
         full: "0.75rem",
       },
+      spacing: {
+        "container-margin": "24px",
+      },
       fontFamily: {
         "headline-md": ["Bricolage Grotesque"],
         "headline-lg-mobile": ["Bricolage Grotesque"],

@@ -1,0 +1,58 @@
+{# 홈 화면 — screen-underlay 내부 (index.html #screen-home 과 동기화) #}
+<div class="home-os h-full flex flex-col overflow-hidden select-none bg-[#F6F0D7] font-body-md relative">
+  <main class="flex-1 min-h-0 mt-12 px-6 flex flex-col overflow-y-auto pb-28">
+    <div class="grid grid-cols-4 gap-x-2 gap-y-6 w-full max-w-md mx-auto mb-12 mt-4 px-2">
+      <div class="home-app-tile flex flex-col items-center gap-3 active-press transition-all cursor-pointer">
+        <div class="home-app-icon bg-[#9CAB84] border-2 border-[#89986D] rounded-2xl flex items-center justify-center shadow-[6px_6px_0px_0px_#89986D] w-[72px] h-[72px]">
+          <span class="material-symbols-outlined text-white text-3xl">image</span>
+        </div>
+        <span class="font-label-md text-[10px] text-[#89986D] uppercase font-bold tracking-tight text-center">Gallery</span>
+      </div>
+      <div class="home-app-tile flex flex-col items-center gap-3 active-press transition-all cursor-pointer">
+        <div class="home-app-icon bg-[#9CAB84] border-2 border-[#89986D] rounded-2xl flex items-center justify-center shadow-[6px_6px_0px_0px_#89986D] w-[72px] h-[72px]">
+          <span class="material-symbols-outlined text-white text-3xl">map</span>
+        </div>
+        <span class="font-label-md text-[10px] text-[#89986D] uppercase font-bold tracking-tight text-center">Maps</span>
+      </div>
+      <div class="home-app-tile flex flex-col items-center gap-3 active-press transition-all cursor-pointer">
+        <div class="home-app-icon bg-[#9CAB84] border-2 border-[#89986D] rounded-2xl flex items-center justify-center shadow-[6px_6px_0px_0px_#89986D] w-[72px] h-[72px]">
+          <span class="material-symbols-outlined text-white text-3xl">note_alt</span>
+        </div>
+        <span class="font-label-md text-[10px] text-[#89986D] uppercase font-bold tracking-tight text-center">Notes</span>
+      </div>
+      <div class="home-app-tile flex flex-col items-center gap-3 active-press transition-all cursor-pointer">
+        <div class="home-app-icon bg-[#9CAB84] border-2 border-[#89986D] rounded-2xl flex items-center justify-center shadow-[6px_6px_0px_0px_#89986D] w-[72px] h-[72px]">
+          <span class="material-symbols-outlined text-white text-3xl">calendar_today</span>
+        </div>
+        <span class="font-label-md text-[10px] text-[#89986D] uppercase font-bold tracking-tight text-center">Calendar</span>
+      </div>
+    </div>
+
+    <div class="w-full max-w-md mx-auto mb-12 mt-4">
+      <div class="bg-surface-container border-2 border-secondary p-6 shadow-[4px_4px_0px_0px_#546434] flex items-center justify-between">
+        <div>
+          <h2 class="font-headline-md text-headline-md text-secondary mb-1">HELLO USER!</h2>
+          <p class="font-body-md text-secondary/80">You have 4 unread messages.</p>
+        </div>
+        <div class="bg-secondary rounded-full p-2">
+          <span class="material-symbols-outlined text-on-secondary text-4xl">face</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <nav class="home-dock absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex justify-around items-center p-4 w-[calc(100%-48px)] max-w-sm bg-surface-container border-2 border-secondary rounded-full shadow-[4px_4px_0px_0px_#546434]">
+    <button type="button" class="bg-[#89986D] text-[#F6F0D7] rounded-full p-3 shadow-none transition-all active:translate-x-1 active:translate-y-1 hover:bg-secondary-container" aria-label="Phone">
+      <span class="material-symbols-outlined home-icon-fill text-3xl">phone</span>
+    </button>
+    <button type="button" class="text-secondary p-3 transition-all active:translate-x-1 active:translate-y-1 hover:bg-secondary-container rounded-full" aria-label="Messages">
+      <span class="material-symbols-outlined text-3xl">messages</span>
+    </button>
+    <button type="button" class="text-secondary p-3 transition-all active:translate-x-1 active:translate-y-1 hover:bg-secondary-container rounded-full" aria-label="Browser">
+      <span class="material-symbols-outlined text-3xl">globe</span>
+    </button>
+    <button type="button" class="text-secondary p-3 transition-all active:translate-x-1 active:translate-y-1 hover:bg-secondary-container rounded-full" aria-label="Settings">
+      <span class="material-symbols-outlined text-3xl">settings</span>
+    </button>
+  </nav>
+</div>
