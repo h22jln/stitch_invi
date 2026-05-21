@@ -1,0 +1,45 @@
+---
+description: Thymeleaf 템플릿 및 HTMX 패턴
+globs: "{**/*.html,**/templates/**,**/resources/templates/**}"
+alwaysApply: false
+---
+
+# Thymeleaf + HTMX
+
+## Thymeleaf
+
+- 레이아웃: `th:replace` / `th:insert`로 `fragments/layout`, `fragments/components`를 재사용한다.
+- HTMX 스왑 대상은 **named fragment**로 분리한다 (`th:fragment="user-row"`).
+
+```html
+<!-- fragments/user-list.html -->
+<tr th:fragment="user-row" th:each="user : ${users}" id="user-${user.id}">
+  <td th:text="${user.name}"></td>
+</tr>
+```
+
+- 폼 검증 오류는 동일 fragment를 다시 렌더해 `hx-target` 안에 메시지를 넣는다.
+
+## HTMX
+
+- 스왑 영역에 안정적인 `id`를 부여한다 (`#main-content`, `#modal-body`).
+- 기본: `hx-get` / `hx-post`, `hx-target`, `hx-swap="innerHTML"` (목록·카드), 모달은 `outerHTML` 또는 `beforeend`.
+- 로딩: `hx-indicator`로 스피너 요소를 지정한다.
+- CSRF: Spring 사용 시 `hx-headers`에 토큰; Python API는 세션·토큰 헤더를 문서화된 방식으로 맞춘다.
+
+```html
+<button hx-get="/users/1/edit"
+        hx-target="#modal-body"
+        hx-swap="innerHTML">
+  Edit
+</button>
+```
+
+## 접근성·점진적 향상
+
+- `hx-*` 없이도 폼·링크가 동작하게 `action`/`method` fallback을 유지한다.
+- `hx-boost="true"`는 전체 네비게이션에만 제한적으로 사용한다.
+
+## Vercel 연동
+
+- 정적 HTML은 `public/`; 동적 fragment URL은 Python `api/` 또는 (Java 호스트) 백엔드와 `vercel.json` `rewrites`로 연결한다.

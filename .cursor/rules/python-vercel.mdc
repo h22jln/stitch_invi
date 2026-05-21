@@ -1,0 +1,33 @@
+---
+description: Python API 및 Vercel Serverless 규칙
+globs: "**/*.py"
+alwaysApply: false
+---
+
+# Python (Vercel)
+
+## 함수 구조
+
+- Vercel Python 핸들러는 `api/<name>.py`에 두고, HTTP 메서드별 분기는 명시한다.
+- HTMX 요청은 `HX-Request`, `HX-Target` 헤더를 확인해 fragment vs 전체 페이지를 구분한다.
+
+```python
+# HTMX partial vs full page
+def is_htmx(request) -> bool:
+    return request.headers.get("HX-Request") == "true"
+```
+
+## 응답
+
+- HTMX 스왑용: HTML 문자열 또는 템플릿 렌더 결과, 상태 코드 200/204/422(검증 오류 시 fragment에 에러 표시).
+- JSON은 HTMX가 `hx-ext`로 명시적으로 요구할 때만 사용한다.
+
+## 의존성·성능
+
+- `requirements.txt`는 최소 버전만 고정; 무거운 ML·이미지 처리 라이브러리는 함수 크기·콜드스타트를 고려해 분리한다.
+- 외부 API·DB 호출은 타임아웃을 두고, 실패 시 HTMX가 스왑할 수 있는 짧은 에러 fragment를 반환한다.
+
+## 테스트·로컬
+
+- `vercel dev`로 `api/` 라우트를 검증한다.
+- 시크릿은 `os.environ`만 사용; `.env`는 로컬 전용.

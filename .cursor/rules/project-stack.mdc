@@ -1,0 +1,43 @@
+---
+description: Thymeleaf/HTMX/Python 스택 및 Vercel 배포 기준
+alwaysApply: true
+---
+
+# Stitch Invi — 프로젝트 스택
+
+## 기술 스택
+
+- **템플릿**: Thymeleaf (서버 렌더 HTML, fragment/layout 재사용)
+- **인터랙션**: HTMX (부분 갱신, 폼·목록·모달; SPA 프레임워크 지양)
+- **백엔드·스크립트**: Python (API, 배치, 유틸)
+
+## 아키텍처 원칙
+
+1. **HTML-first**: 초기 페이지는 서버가 완성된 HTML로 응답한다. HTMX는 fragment만 교체한다.
+2. **관심 분리**: Thymeleaf = 표현·레이아웃, Python = 비즈니스·데이터·인증 로직, HTMX = UX(스왑·폴링·트리거).
+3. **최소 JS**: `hx-*`와 `hx-swap`으로 해결; 불가피할 때만 소량 vanilla JS.
+
+## Vercel 배포
+
+- **Python**: `api/` 아래 Serverless Function 형태 (`handler` export, `requirements.txt` 동봉). 장시간 프로세스·백그라운드 워커는 Vercel에 두지 않는다.
+- **정적 자산**: `public/` (CSS, JS, 이미지). 빌드 산출물은 `vercel.json`의 `outputDirectory`와 맞춘다.
+- **HTMX 엔드포인트**: JSON API보다 **HTML fragment** 응답을 우선한다 (`Content-Type: text/html`, Thymeleaf `th:fragment` 또는 동등한 partial).
+- **Thymeleaf(Java)**: Spring Boot는 Vercel 기본 런타임에 맞지 않는다. Java+Thymeleaf를 쓸 경우 Vercel은 정적·프록시·Python 함수만 두고, 앱 서버는 별도 호스트를 전제로 `vercel.json` rewrites를 설계한다.
+- **환경 변수**: `VERCEL_*`, 시크릿은 Vercel 대시보드·`.env.example`만 문서화하고 코드·커밋에 넣지 않는다.
+
+## 디렉터리 관례 (권장)
+
+```
+api/                 # Python serverless (Vercel)
+public/              # 정적 파일
+templates/           # Thymeleaf (또는 Java 모듈의 resources/templates)
+src/main/resources/  # Spring 사용 시
+vercel.json
+requirements.txt
+```
+
+## 금지·지양
+
+- HTMX 대상 URL에 무거운 SPA 번들 의존
+- Vercel 함수에서 DB 커넥션 풀·긴 blocking I/O (타임아웃·콜드스타트 고려)
+- fragment 없이 전체 페이지를 매 요청마다 HTMX로 다시 로드
