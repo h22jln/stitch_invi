@@ -1,0 +1,92 @@
+:root {
+  --bg: #0f1419;
+  --fg: #e7ecf3;
+  --muted: #8b98a5;
+  --accent: #3d8bfd;
+  --border: #2f3b47;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.5;
+}
+
+.site-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header a {
+  color: var(--fg);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+main {
+  padding: 1.5rem;
+  max-width: 48rem;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.htmx-indicator {
+  color: var(--muted);
+}
+
+.htmx-request .htmx-indicator {
+  opacity: 1;
+}
+
+.htmx-indicator {
+  opacity: 0.4;
+}
+
+button {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(1.1);
+}
+
+.error-banner {
+  padding: 0.75rem 1rem;
+  border: 1px solid #c44;
+  border-radius: 6px;
+  background: rgba(200, 68, 68, 0.15);
+}
+
+code {
+  font-size: 0.85em;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}

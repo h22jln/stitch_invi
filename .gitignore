@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+.vercel
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+.venv/
+dist/
+*.egg-info/
+.DS_Store

@@ -8,7 +8,8 @@ alwaysApply: false
 
 ## 함수 구조
 
-- Vercel Python 핸들러는 `api/<name>.py`에 두고, HTTP 메서드별 분기는 명시한다.
+- Vercel Python 핸들러는 `api/<name>.py`에 두고, 공유 코드는 루트 `lib/`에 둔다.
+- HTTP 메서드별 분기는 명시한다.
 - HTMX 요청은 `HX-Request`, `HX-Target` 헤더를 확인해 fragment vs 전체 페이지를 구분한다.
 
 ```python

@@ -1,0 +1,21 @@
+{# Thymeleaf th:fragment="example-row" 와 동일한 역할 — HTMX 스왑 단위 #}
+<table class="data-table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+    </tr>
+  </thead>
+  <tbody id="example-list">
+    {% for item in items %}
+    <tr id="item-{{ item.id }}">
+      <td>{{ item.id }}</td>
+      <td>{{ item.name }}</td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="2">No items</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

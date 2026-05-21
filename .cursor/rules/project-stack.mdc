@@ -25,13 +25,15 @@ alwaysApply: true
 - **Thymeleaf(Java)**: Spring Boot는 Vercel 기본 런타임에 맞지 않는다. Java+Thymeleaf를 쓸 경우 Vercel은 정적·프록시·Python 함수만 두고, 앱 서버는 별도 호스트를 전제로 `vercel.json` rewrites를 설계한다.
 - **환경 변수**: `VERCEL_*`, 시크릿은 Vercel 대시보드·`.env.example`만 문서화하고 코드·커밋에 넣지 않는다.
 
-## 디렉터리 관례 (권장)
+## 디렉터리 관례
 
 ```
-api/                 # Python serverless (Vercel)
-public/              # 정적 파일
-templates/           # Thymeleaf (또는 Java 모듈의 resources/templates)
-src/main/resources/  # Spring 사용 시
+api/                 # Vercel Python serverless (파일명 = 경로)
+lib/                 # 공유: http, render, db
+public/              # 정적 (index.html, css)
+templates/           # Jinja2 HTML (Thymeleaf fragment 패턴과 동일)
+db/migrations/       # RDB 스키마 (Alembic 등)
+src/main/resources/templates/  # 추후 Spring/Thymeleaf
 vercel.json
 requirements.txt
 ```

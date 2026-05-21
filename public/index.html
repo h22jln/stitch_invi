@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stitch Invi</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <script src="https://unpkg.com/htmx.org@2.0.4" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <h1>Stitch Invi</h1>
+  </header>
+
+  <main id="main-content">
+    <section>
+      <h2>Example list</h2>
+      <p class="hint">HTMX로 <code>/api/example</code> fragment를 불러옵니다.</p>
+
+      <div
+        id="example-panel"
+        hx-get="/api/example"
+        hx-trigger="load"
+        hx-target="#example-panel"
+        hx-swap="innerHTML"
+        hx-indicator="#loading"
+      >
+        <p id="loading" class="htmx-indicator">Loading…</p>
+      </div>
+
+      <button type="button" hx-get="/api/example" hx-target="#example-panel" hx-swap="innerHTML">
+        Refresh
+      </button>
+    </section>
+  </main>
+</body>
+</html>
