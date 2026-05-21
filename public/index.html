@@ -5,13 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Retro Lock Screen</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/fonts.css"/>
   <link rel="stylesheet" href="/css/lock-screen.css"/>
+  <link rel="stylesheet" href="/css/calendar-screen.css"/>
   <script src="https://unpkg.com/htmx.org@2.0.4" defer></script>
   <script src="/js/tailwind-lock-config.js"></script>
 </head>
-<body class="lock-screen min-h-screen flex items-center justify-center p-4">
+<body class="lock-screen font-sans min-h-screen flex items-center justify-center p-4">
   <div id="phone-frame" class="phone-frame">
     <!-- 고정 상태바 (베젤) -->
     <div class="phone-status-bar phone-status-bar--lock">
@@ -39,7 +40,8 @@
     <div id="phone-screen" class="phone-screen">
       <!-- 홈: 아래 고정 -->
       <section id="screen-home" class="screen-underlay">
-        <div class="home-os h-full flex flex-col overflow-hidden select-none bg-[#F6F0D7] font-body-md relative">
+        <div class="home-os h-full relative overflow-hidden select-none bg-[#F6F0D7] font-body-md">
+          <div id="home-view" class="h-full flex flex-col">
           <main class="flex-1 min-h-0 mt-12 px-6 flex flex-col overflow-y-auto pb-28">
             <div class="grid grid-cols-4 gap-x-2 gap-y-6 w-full max-w-md mx-auto mb-12 mt-4 px-2">
               <div class="home-app-tile flex flex-col items-center gap-3 active-press transition-all cursor-pointer">
@@ -60,7 +62,12 @@
                 </div>
                 <span class="font-label-md text-[10px] text-[#89986D] uppercase font-bold tracking-tight text-center">Notes</span>
               </div>
-              <div class="home-app-tile flex flex-col items-center gap-3 active-press transition-all cursor-pointer">
+              <div
+                class="home-app-tile home-app-tile--calendar flex flex-col items-center gap-3 active-press transition-all cursor-pointer"
+                role="button"
+                tabindex="0"
+                aria-label="Open Calendar"
+              >
                 <div class="home-app-icon bg-[#9CAB84] border-2 border-[#89986D] rounded-2xl flex items-center justify-center shadow-[6px_6px_0px_0px_#89986D] w-[72px] h-[72px]">
                   <span class="material-symbols-outlined text-white text-3xl">calendar_today</span>
                 </div>
@@ -93,6 +100,8 @@
               <span class="material-symbols-outlined text-3xl">settings</span>
             </button>
           </nav>
+          </div>
+          <div id="app-overlay" class="app-overlay"></div>
         </div>
       </section>
 
@@ -175,6 +184,7 @@
     <span class="material-symbols-outlined text-secondary !text-[120px]">grid_view</span>
   </div>
 
+  <script src="/js/calendar-screen.js" defer></script>
   <script src="/js/home-screen.js" defer></script>
   <script src="/js/lock-screen.js" defer></script>
 </body>

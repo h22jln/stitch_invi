@@ -2,7 +2,7 @@
   const home = document.getElementById("screen-home");
   if (!home) return;
 
-  home.querySelectorAll(".home-app-tile").forEach((item) => {
+  home.querySelectorAll(".home-app-tile:not(.home-app-tile--calendar)").forEach((item) => {
     item.addEventListener("click", () => {
       const icon = item.querySelector(".home-app-icon");
       if (!icon) return;
@@ -14,4 +14,21 @@
       }, 150);
     });
   });
+
+  const calendarTile = home.querySelector(".home-app-tile--calendar");
+  if (calendarTile) {
+    calendarTile.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (window.StitchInvi?.openCalendar) {
+        window.StitchInvi.openCalendar();
+      }
+    });
+    calendarTile.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        window.StitchInvi?.openCalendar?.();
+      }
+    });
+  }
 })();

@@ -6,13 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>{{ title }}</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/fonts.css"/>
   <link rel="stylesheet" href="/css/lock-screen.css"/>
   <script src="https://unpkg.com/htmx.org@2.0.4" defer></script>
   <script src="/js/tailwind-lock-config.js"></script>
 </head>
-<body class="lock-screen min-h-screen flex items-center justify-center p-4">
+<body class="lock-screen font-sans min-h-screen flex items-center justify-center p-4">
   <div class="relative w-full max-w-[390px] h-[844px] bg-primary-container neo-brutal-card rounded-[40px] overflow-hidden flex flex-col items-center">
     <main class="flex-1 w-full flex flex-col items-center pt-24 px-6">
       {{ notifications_html | safe }}

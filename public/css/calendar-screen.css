@@ -1,0 +1,31 @@
+.neo-shadow {
+  box-shadow: 4px 4px 0 0 #89986d;
+}
+
+.app-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  overflow: hidden;
+  background-color: #f1ffd3;
+}
+
+.app-overlay--open {
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.phone-frame--unlocked .home-dock {
+  pointer-events: auto;
+}
+
+.calendar-app {
+  position: relative;
+}
+
+.calendar-day.is-selected {
+  background-color: #89986d;
+}

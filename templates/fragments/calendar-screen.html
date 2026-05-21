@@ -1,0 +1,98 @@
+{# KitschOS Calendar — 폰 app-overlay 내부 #}
+<div class="calendar-app h-full flex flex-col bg-[#f1ffd3] text-[#141f02] overflow-hidden">
+  <header class="shrink-0 flex items-center gap-3 px-4 pt-14 pb-3 border-b-2 border-[#7a776d] bg-[#f1ffd3]">
+    <button type="button" class="calendar-back neo-shadow bg-secondary-container border-2 border-[#7a776d] p-2 active:translate-x-1 active:translate-y-1 active:shadow-none transition-all" aria-label="Back to home">
+      <span class="material-symbols-outlined text-[#141f02]">arrow_back</span>
+    </button>
+    <h1 class="font-headline-md text-[24px] font-bold text-[#141f02] leading-none">Calendar</h1>
+  </header>
+
+  <div class="flex-1 min-h-0 overflow-y-auto pb-24 px-4">
+    <div class="mb-6">
+      <div class="flex items-center justify-between mb-2">
+        <span class="font-label-md text-[14px] font-bold tracking-widest text-[#49473e] uppercase">Year of the Tiger / 2024</span>
+        <button type="button" class="bg-[#d4e7ab] border-2 border-[#7a776d] p-2 neo-shadow active:translate-x-1 active:translate-y-1 active:shadow-none transition-all" aria-label="Filter">
+          <span class="material-symbols-outlined">tune</span>
+        </button>
+      </div>
+      <p class="font-headline-xl text-[48px] font-extrabold leading-none text-[#141f02]">MAY</p>
+    </div>
+
+    <div class="bg-[#f6f0d7] border-2 border-[#7a776d] neo-shadow overflow-hidden">
+      <div class="grid grid-cols-7 border-b-2 border-[#7a776d] bg-[#d4e7ab]">
+        {% for day in ['SUN','MON','TUE','WED','THU','FRI','SAT'] %}
+        <div class="p-2 border-r-2 border-[#7a776d] last:border-r-0 text-center font-label-md text-[11px] font-bold text-[#586838]">{{ day }}</div>
+        {% endfor %}
+      </div>
+      <div class="grid grid-cols-7 bg-[#9CAB84] gap-[2px]">
+        {% for pad in range(month_offset) %}
+        <div class="bg-[#f6f0d7] min-h-[72px] p-2 opacity-50 flex items-end justify-end border-none">
+          <span class="font-bold text-[#cac6bb] text-lg">{{ pad_days[pad] }}</span>
+        </div>
+        {% endfor %}
+        {% for day in range(1, days_in_month + 1) %}
+        {% set selected = day == selected_day %}
+        {% set has_event = day in events %}
+        <div class="calendar-day min-h-[72px] p-2 flex flex-col justify-between cursor-pointer transition-colors {{ 'bg-[#89986D]' if selected else 'bg-[#f6f0d7] hover:bg-[#e6f6ca]' }}" data-day="{{ day }}">
+          <div class="flex justify-between items-start">
+            {% if has_event %}
+            <span class="calendar-day-dot material-symbols-outlined text-[14px] {{ 'text-white' if selected else 'text-[#546434]' }}">circle</span>
+            {% else %}
+            <span></span>
+            {% endif %}
+          </div>
+          <span class="calendar-day-num font-bold text-right text-lg {{ 'text-white' if selected else 'text-[#706d59]' }}">{{ day }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="mt-8 space-y-8">
+      <section>
+        <h2 class="font-headline-md text-[24px] font-bold mb-4 flex items-center gap-2">
+          <span class="material-symbols-outlined">event_note</span>
+          TODAY'S TASK
+        </h2>
+        <div class="bg-[#e6f6ca] border-2 border-[#7a776d] neo-shadow p-4 flex flex-col gap-4">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-[#89986D] border-2 border-[#7a776d] flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-white">check</span>
+            </div>
+            <div>
+              <p class="text-[14px] font-bold tracking-wide text-[#63714f] uppercase">10:00 AM</p>
+              <h3 class="text-lg font-bold">Finish UI Components</h3>
+            </div>
+          </div>
+          <hr class="border-[#7a776d] opacity-20"/>
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-[#f1ffd3] border-2 border-[#7a776d] flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-[#7a776d]">circle</span>
+            </div>
+            <div>
+              <p class="text-[14px] font-bold tracking-wide text-[#63714f] uppercase">02:30 PM</p>
+              <h3 class="text-lg font-bold">Sync with Studio Team</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="font-headline-md text-[24px] font-bold mb-4 flex items-center gap-2">
+          <span class="material-symbols-outlined">collections</span>
+          VISUAL MEMO
+        </h2>
+        <div class="bg-[#f1ffd3] border-2 border-[#7a776d] neo-shadow overflow-hidden h-40">
+          <img
+            alt="Neo-Brutalist artwork"
+            class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxf7p1GUIsxhOGgXGALILmZ_X2xJWLi5Ts4FooffiZcOR3H532HVE4o8bK7iID56uATVIOoq-DkdmWeKj-48Q47HoAsCZLHtTSEUtCNGVe7PnaCfk5PSZhPZD6LtNv0ZPZzKmzgBgH9vBm-ql-5qY7cOhCCcaRg2tRbuxDvOI0gfhVRn3xkt0SB1JRySO7wMMBvbZJ6fOOczqrUjSGe1fVpzen3R3WXl6abcIHbZOoMNdNweRdVIIzdpiQHRuXpslMjMNuubHM-aA"
+          />
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <button type="button" class="calendar-fab absolute bottom-6 right-4 w-14 h-14 bg-[#556341] text-white rounded-full border-2 border-[#7a776d] neo-shadow active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center justify-center z-30" aria-label="Add event">
+    <span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1;">add</span>
+  </button>
+</div>
